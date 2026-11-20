@@ -40,6 +40,7 @@ window.__ModuleLoader__.load({
         'panel.cacheWrite': 'Cache write',
         'panel.output': 'Output',
         'panel.partialNote': '{count} response(s) are not in the price list and are counted as unknown, not as free.',
+        'panel.windowNote': 'Part of the history is not loaded: the total uses the whole log\'s token usage and the {model} price.',
         'panel.note': 'Source: {source}',
         'panel.pricesBuiltin': 'built-in list, check it against the provider price page',
       },
@@ -63,6 +64,7 @@ window.__ModuleLoader__.load({
         'panel.cacheWrite': '缓存写入',
         'panel.output': '输出',
         'panel.partialNote': '有 {count} 个响应用于不在价目中，按未知处理，而不是免费。',
+        'panel.windowNote': '历史未全部加载：总额按完整日志的 token 用量与 {model} 的价格计算。',
         'panel.note': '来源：{source}',
         'panel.pricesBuiltin': '内置价目，请对照服务商价格页核对',
       },
@@ -88,6 +90,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'Запись в кеш',
       'panel.output': 'Вывод',
       'panel.partialNote': '{count} ответ(ов) нет в прайсе: считаются неизвестными, а не бесплатными.',
+      'panel.windowNote': 'Часть истории не загружена: итог посчитан по расходу токенов всей сессии и тарифу {model}.',
       'panel.note': 'Источник: {source}.',
       'panel.pricesBuiltin': 'встроенный прайс, сверьте со страницей цен провайдера',
     }
@@ -112,6 +115,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'Cache-Schreiben',
       'panel.output': 'Ausgabe',
       'panel.partialNote': '{count} Antwort(en) fehlen in der Preisliste und gelten als unbekannt, nicht als kostenlos.',
+      'panel.windowNote': 'Ein Teil des Verlaufs ist nicht geladen: die Summe nutzt den Token-Verbrauch des gesamten Protokolls und den Preis von {model}.',
       'panel.note': 'Quelle: {source}.',
       'panel.pricesBuiltin': 'eingebaute Preise, bitte mit der Preisseite des Anbieters abgleichen',
     }
@@ -136,6 +140,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'Escritura en caché',
       'panel.output': 'Salida',
       'panel.partialNote': '{count} respuesta(s) no están en la lista de precios y cuentan como desconocidas, no como gratuitas.',
+      'panel.windowNote': 'Parte del historial no está cargada: el total usa el consumo de tokens del registro completo y el precio de {model}.',
       'panel.note': 'Fuente: {source}.',
       'panel.pricesBuiltin': 'lista integrada, verifíquela en la página de precios del proveedor',
     }
@@ -160,6 +165,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'Écriture du cache',
       'panel.output': 'Sortie',
       'panel.partialNote': '{count} réponse(s) absentes de la grille tarifaire comptent comme inconnues, pas comme gratuites.',
+      'panel.windowNote': 'Une partie de l’historique n’est pas chargée : le total utilise la consommation de tokens du journal complet et le tarif de {model}.',
       'panel.note': 'Source : {source}.',
       'panel.pricesBuiltin': 'grille intégrée, à vérifier sur la page des tarifs du fournisseur',
     }
@@ -184,6 +190,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'キャッシュ書き込み',
       'panel.output': '出力',
       'panel.partialNote': '{count} 件のレスポンスは価格表にないため、無料ではなく価格不明として扱います。',
+      'panel.windowNote': '履歴の一部が未読み込みです。合計はログ全体のトークン使用量と {model} の料金で計算しています。',
       'panel.note': '出典：{source}。',
       'panel.pricesBuiltin': '組み込みの価格表（プロバイダーの価格ページで確認してください）',
     }
@@ -208,6 +215,7 @@ window.__ModuleLoader__.load({
       'panel.cacheWrite': 'Gravação no cache',
       'panel.output': 'Saída',
       'panel.partialNote': '{count} resposta(s) não estão na lista de preços e contam como desconhecidas, não como gratuitas.',
+      'panel.windowNote': 'Parte do histórico não está carregada: o total usa o consumo de tokens do log completo e o preço de {model}.',
       'panel.note': 'Fonte: {source}.',
       'panel.pricesBuiltin': 'lista embutida, confira na página de preços do provedor',
     }
@@ -562,6 +570,9 @@ window.__ModuleLoader__.load({
         summary.total.unpriced > 0
           ? h('p', { className: 'dshrc2-note' }, t('panel.partialNote', { count: summary.total.unpriced }))
           : null,
+        summary.partial
+          ? h('p', { className: 'dshrc2-note' }, t('panel.windowNote', { model: summary.route === undefined ? '' : summary.route.model }))
+          : null,
         h('p', { className: 'dshrc2-note' }, t('panel.estimate')),
         rate === undefined ? null : h('p', { className: 'dshrc2-note' }, fxLine(rate, locale)),
       )
@@ -755,9 +766,25 @@ window.__ModuleLoader__.load({
           location,
           visibility: 'visible',
           groupTree: 'turn',
-          data: { summary, seq: last.event.seq },
+          data: { summary, routes: routesOf(context.state.messages), seq: last.event.seq },
         }
       },
+    }
+
+    /**
+     * Distinct provider/model routes among the collected responses.
+     * @param messages - `assistant/message` payloads, oldest first.
+     * @returns one entry per distinct route.
+     */
+    function routesOf(messages) {
+      const seen = new Map()
+      for (const message of messages) {
+        const route = routeOf(message)
+        if (route === null || typeof route !== 'object' || typeof route.model !== 'string') continue
+        const key = String(route.provider) + '\u0000' + route.model
+        if (!seen.has(key)) seen.set(key, { provider: route.provider, model: route.model })
+      }
+      return [...seen.values()]
     }
 
     /**
@@ -775,18 +802,85 @@ window.__ModuleLoader__.load({
     }
 
     /**
-     * Chat row view for both kinds: the Turn's own price and the session total
-     * render the same chip with a different label scope.
+     * Chat row view: the Turn's own price, and — for the session kind — the
+     * whole-log total. This component takes no hooks so the scope branch can
+     * choose a different component without breaking hook order.
      */
     function RequestCostRow(props) {
       const data = props.node && props.node.data
       if (data === undefined || data.summary === undefined) return null
-      const scope = props.node.kind === SESSION_KIND ? 'session' : 'request'
+      if (props.node.kind === SESSION_KIND) {
+        return h(SessionCostRow, { data, t: props.t, fxLocale: props.fxLocale, useProjection: props.useProjection })
+      }
       return h('div', {
-        className: scope === 'session' ? 'dshrc2-row dshrc2-rowSession' : 'dshrc2-row',
+        className: 'dshrc2-row',
         'data-request-cost-row': String(data.seq),
-        'data-request-cost-scope': scope,
-      }, h(CostPill, { summary: data.summary, t: props.t, fxLocale: props.fxLocale, scope }))
+        'data-request-cost-scope': 'request',
+      }, h(CostPill, { summary: data.summary, t: props.t, fxLocale: props.fxLocale, scope: 'request' }))
+    }
+
+    /**
+     * Session chip. The durable `tokenUsage` projection covers the complete log
+     * even when the Chat window is partial, so the total is stable while the
+     * reader pages history; the window only supplies the route and the count.
+     */
+    function SessionCostRow({ data, t, fxLocale, useProjection }) {
+      // Same call shape either way, so the hook order never depends on the seat.
+      const read = typeof useProjection === 'function' ? useProjection : () => undefined
+      const usage = read('tokenUsage')
+      const summary = React.useMemo(() => sessionSummary(data, usage), [data, usage])
+      return h('div', {
+        className: 'dshrc2-row dshrc2-rowSession',
+        'data-request-cost-row': String(data.seq),
+        'data-request-cost-scope': 'session',
+        'data-request-cost-partial': summary.partial ? 'true' : undefined,
+      }, h(CostPill, { summary, t, fxLocale, scope: 'session' }))
+    }
+
+    /**
+     * Price the whole log from the durable bucket totals.
+     * @param data - session node payload (window summary and the routes it saw).
+     * @param usage - `tokenUsage` projection of the complete log, when served.
+     * @returns a summary whose total covers the complete log when it can be
+     * priced, else the window total, with a `partial` marker.
+     */
+    function sessionSummary(data, usage) {
+      const windowSummary = data.summary
+      const route = data.routes !== undefined && data.routes.length === 1 ? data.routes[0] : undefined
+      if (usage === undefined || route === undefined) {
+        return { at: windowSummary.at, total: windowSummary.total, partial: false }
+      }
+      const price = priceOf(route)
+      if (price === undefined) {
+        return { at: windowSummary.at, total: windowSummary.total, partial: false }
+      }
+      const buckets = {
+        input: usage.uncachedInputTokens | 0,
+        cacheRead: usage.cacheReadTokens | 0,
+        cacheWrite: usage.cacheWriteTokens | 0,
+        output: usage.outputTokens | 0,
+      }
+      const cost = costOf(buckets, price)
+      if (cost === undefined) {
+        return { at: windowSummary.at, total: windowSummary.total, partial: false }
+      }
+      // The window may hold only part of the log; the markers say so.
+      const loaded = windowSummary.total.tokens
+      const partial = loaded.input !== buckets.input
+        || loaded.cacheRead !== buckets.cacheRead
+        || loaded.cacheWrite !== buckets.cacheWrite
+        || loaded.output !== buckets.output
+      return {
+        at: windowSummary.at,
+        total: {
+          cost,
+          tokens: buckets,
+          priced: windowSummary.total.priced,
+          unpriced: windowSummary.total.unpriced,
+        },
+        partial,
+        route,
+      }
     }
 
     /* ── client plugin ────────────────────────────────────────────────── */

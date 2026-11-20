@@ -231,15 +231,33 @@ for (const turnNumber of [1, 2]) {
 const sessionView = sessionDefinition.buildViewNode({
   key: 'session', id: 'session', start: sessionMatches[0], matches: sessionMatches, state: sessionState,
 })
-const sessionRow = Row({ node: sessionView, t })
-const sessionPill = sessionRow.children[0].type(sessionRow.children[0].props)
-const sessionChip = sessionPill.children[0]
-expect(sessionChip?.type, 'button')
-// The session chip has no leading figure: icon, then the labelled total.
-expect(sessionChip.children.length, 2)
-const sessionLabel = sessionChip.children[1].children[0]
-if (!sessionLabel.includes('по сессии')) throw new Error('session chip lost its label: ' + sessionLabel)
-console.log('session chip:', sessionLabel)
+/** Render the session chip with an optional whole-log projection. */
+function sessionChipFor(projection) {
+  const row = Row({ node: sessionView, t, useProjection: () => projection })
+  const chipRow = row.type(row.props)
+  const pill = chipRow.children[0].type(chipRow.children[0].props)
+  return { row: chipRow, button: pill.children[0] }
+}
+
+// 7. Without the projection the session chip totals the loaded window.
+const windowOnly = sessionChipFor(undefined)
+expect(windowOnly.button.type, 'button')
+const windowLabel = windowOnly.button.children[1].children[0]
+if (!windowLabel.includes('по сессии')) throw new Error('session chip lost its label: ' + windowLabel)
+expect(windowOnly.row.props['data-request-cost-partial'], undefined)
+console.log('session (window):', windowLabel)
+
+// 8. With the projection the total covers the whole log, even when the window
+//    holds only part of it — the case the reader hits before paging history.
+const wholeLog = { uncachedInputTokens: 5000, cacheReadTokens: 500000, cacheWriteTokens: 0, outputTokens: 900 }
+const partial = sessionChipFor(wholeLog)
+expect(partial.row.props['data-request-cost-partial'], 'true')
+const expected = (5000 * 1 + 500000 * 0.02 + 900 * 2) / 1e6
+if (partial.button.props['data-request-cost'] === undefined) throw new Error('session chip lost its price attribute')
+const partialLabel = partial.button.children[1].children[0]
+console.log('session (whole log):', partialLabel)
+if (partialLabel === windowLabel) throw new Error('whole-log total equals the window total')
+console.log('whole-log cost:', expected.toFixed(6))
 
 console.log('effects:', effects.length, 'owned; dictionaries:', dictionaries.length)
 console.log('OK')
