@@ -276,7 +276,15 @@ const peakChip = pillOf(rowAt(Date.UTC(2026, 10, 20, 2, 0, 0)))
 const offPeakChip = pillOf(rowAt(Date.UTC(2026, 10, 21, 12, 0, 0)))
 expect(peakChip.children[1].children[0], '~$0.00054')
 expect(offPeakChip.children[1].children[0], '~$0.00027')
-console.log('peak:', peakChip.children[1].children[0], '| off-peak:', offPeakChip.children[1].children[0])
+// A peak-tariff response carries a marker; an off-peak one does not.
+const peakMark = peakChip.children.map(child => child && child.props && child.props.className)
+expect(peakChip.children.some(child => child && child.props && child.props.className === 'dshrc2-peak'), true)
+expect(offPeakChip.children.some(child => child && child.props && child.props.className === 'dshrc2-peak'), false)
+if (!peakChip.props['aria-label'].includes('пик')) throw new Error('peak marker missing from the label')
+if (offPeakChip.props['aria-label'].includes('пик')) throw new Error('off-peak chip claims peak')
+void peakMark
+console.log('peak:', peakChip.children[1].children[0], '| marker:', peakChip.props['aria-label'])
+console.log('off-peak:', offPeakChip.children[1].children[0])
 
 console.log('effects:', effects.length, 'owned; dictionaries:', dictionaries.length)
 console.log('OK')

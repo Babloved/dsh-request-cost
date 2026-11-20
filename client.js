@@ -27,6 +27,7 @@ window.__ModuleLoader__.load({
         'pill.requestPartial': 'per request {total}+ ({count} unpriced)',
         'pill.session': 'session {total}',
         'pill.sessionPartial': 'session {total}+ ({count} unpriced)',
+        'pill.peak': 'peak',
         'pill.unpriced': 'price unknown',
         'panel.title': 'Request cost',
         'panel.estimate': 'Estimated from token usage; the bill is on the platform.',
@@ -53,6 +54,7 @@ window.__ModuleLoader__.load({
         'pill.requestPartial': '本次请求 {total}+（{count} 个未计价）',
         'pill.session': '本次会话 {total}',
         'pill.sessionPartial': '本次会话 {total}+（{count} 个未计价）',
+        'pill.peak': '峰时',
         'pill.unpriced': '价格未知',
         'panel.title': '请求费用',
         'panel.estimate': '按 token 用量估算，实际账单以平台为准。',
@@ -81,6 +83,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': 'за запрос {total}+ ({count} без цены)',
       'pill.session': 'по сессии {total}',
       'pill.sessionPartial': 'по сессии {total}+ ({count} без цены)',
+      'pill.peak': 'пик',
       'pill.unpriced': 'цена неизвестна',
       'panel.title': 'Стоимость запросов',
       'panel.estimate': 'Оценка по токенам, списание считает платформа.',
@@ -108,6 +111,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': 'pro Anfrage {total}+ ({count} ohne Preis)',
       'pill.session': 'Sitzung {total}',
       'pill.sessionPartial': 'Sitzung {total}+ ({count} ohne Preis)',
+      'pill.peak': 'Peak',
       'pill.unpriced': 'Preis unbekannt',
       'panel.title': 'Anfragekosten',
       'panel.estimate': 'Schätzung aus der Token-Nutzung; die Abrechnung erfolgt auf der Plattform.',
@@ -135,6 +139,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': 'por solicitud {total}+ ({count} sin precio)',
       'pill.session': 'sesión {total}',
       'pill.sessionPartial': 'sesión {total}+ ({count} sin precio)',
+      'pill.peak': 'pico',
       'pill.unpriced': 'precio desconocido',
       'panel.title': 'Coste de solicitudes',
       'panel.estimate': 'Estimación según el uso de tokens; la factura la calcula la plataforma.',
@@ -162,6 +167,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': 'par requête {total}+ ({count} sans prix)',
       'pill.session': 'session {total}',
       'pill.sessionPartial': 'session {total}+ ({count} sans prix)',
+      'pill.peak': 'plein',
       'pill.unpriced': 'prix inconnu',
       'panel.title': 'Coût des requêtes',
       'panel.estimate': 'Estimation d’après les tokens ; la facturation est faite par la plateforme.',
@@ -189,6 +195,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': '今回のリクエスト {total}+（{count} 件は価格不明）',
       'pill.session': 'セッション {total}',
       'pill.sessionPartial': 'セッション {total}+（{count} 件は価格不明）',
+      'pill.peak': 'ピーク',
       'pill.unpriced': '価格不明',
       'panel.title': 'リクエスト料金',
       'panel.estimate': 'トークン使用量からの概算です。請求はプラットフォーム側で確定します。',
@@ -216,6 +223,7 @@ window.__ModuleLoader__.load({
       'pill.requestPartial': 'por requisição {total}+ ({count} sem preço)',
       'pill.session': 'sessão {total}',
       'pill.sessionPartial': 'sessão {total}+ ({count} sem preço)',
+      'pill.peak': 'pico',
       'pill.unpriced': 'preço desconhecido',
       'panel.title': 'Custo das requisições',
       'panel.estimate': 'Estimativa pelo uso de tokens; a cobrança é calculada pela plataforma.',
@@ -557,6 +565,9 @@ window.__ModuleLoader__.load({
       // viewport must wrap the readings instead of squeezing them.
       '.dshrc2-row{display:flex;justify-content:flex-start;margin:2px 0}',
       '.dshrc2-rowSession{margin-top:0}',
+      '.dshrc2-peak{flex:none;margin-left:6px;padding:0 4px;border:.5px solid var(--dsw-alias-border-l2);',
+      'border-radius:4px;color:var(--dsw-alias-label-tertiary);font-size:11px;line-height:16px;',
+      'text-transform:lowercase}',
       '@position-try --dshrc2-window{position-area:none;top:max(12px,var(--dsh-frame-overlay-top,12px));',
       'bottom:max(12px,calc(anchor(top) + 8px));left:12px;right:12px;margin:0;align-self:safe end;justify-self:safe end}',
       '@position-try --dshrc2-opposite{top:max(12px,calc(anchor(bottom) + 8px));bottom:12px;align-self:start}',
@@ -689,7 +700,8 @@ window.__ModuleLoader__.load({
       }, [available, expanded])
 
       if (!available) return null
-      const text = labelFor(summary, t, rates, locale, scope)
+      const peak = scope === 'request' && summary.at !== undefined && summary.at.peak === true
+      const text = labelFor(summary, t, rates, locale, scope) + (peak ? ' · ' + t('pill.peak') : '')
       const at = atText(summary, t, rates, locale)
       // The session chip states one figure; the request chip leads with the
       // newest response and names the Turn's total beside it.
@@ -712,6 +724,7 @@ window.__ModuleLoader__.load({
           h(PillIcon),
           head === null ? null : h('span', { className: 'dshrc2-head-cost' }, head),
           h('span', { className: 'dshrc2-sub' }, text),
+          peak ? h('span', { className: 'dshrc2-peak', 'aria-hidden': true }, t('pill.peak')) : null,
         ),
         expanded && createPortal(
           h('div', { ref: panelRef, style: { positionAnchor: anchor } }, h(CostPanel, { summary, t, rates, locale, scope })),
