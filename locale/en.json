@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Request cost",
+    "description": "Adds request cost to the chat: under every completed answer a chip shows what that answer cost («per request»), and directly below it a second chip shows the running total for the whole session. Both are given in yuan and rubles at the current online rate, and both open a breakdown of input, cache and output tokens. It reads the session log already on disk and writes nothing to the session. One optional network request leaves the browser: the reference rate from open.er-api.com, cached for six hours, with no prices, prompts or tokens sent. Prices are built in for deepseek-flash and deepseek-v4-pro (yuan per million tokens, from the provider price page); another model reads as price unknown, never as free. Figures are an estimate, not a bill. Disabling removes both chips.",
+    "detail": "docs/DETAIL.en.md"
+  }
+}

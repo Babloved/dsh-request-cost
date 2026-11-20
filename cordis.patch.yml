@@ -1,0 +1,7 @@
+# Host half of the request cost meter. It registers no service, tool, prompt
+# section, or event listener: the row exists so the bundle is visible in
+# Plugins, and every figure is derived by the client half from the session log
+# already on disk.
+- insert:
+    - id: request-cost
+      name: '@local/dsh-request-cost'
