@@ -111,7 +111,7 @@ const sessionDefinition = definitions.find(d => d.kind === 'request-cost-total')
 const t = ctx.locale.bind('requestCost2')
 
 const flash = { provider: 'deepseek-official', model: 'deepseek-flash' }
-// 1200 x ¥1 + 150 x ¥2 per million = ¥0.0015 per response.
+// flash off-peak: 1200 x $0.15 + 150 x $0.6 per million = $0.00027.
 const flashMessage = () => ({
   type: 'assistant/message',
   data: {
@@ -147,7 +147,7 @@ function rowFor(events) {
   const state = definition.start({ key: 'turn', matches, start }, start)
   const context = { key: 'turn', id: 'turn', start, matches, state }
   const node = definition.buildViewNode(context)
-  return node === null ? null : Row({ node, t })
+  return node === null ? null : Row({ node, t, fxLocale: () => 'en-US' })
 }
 
 /**
@@ -180,7 +180,7 @@ expectEmpty(rowFor([{ type: 'turn/start', data: { turn: 1 } }, unknownMessage, {
 // 3. A priced Turn shows the chip with its price.
 const turnRow = pillOf(rowFor([{ type: 'turn/start', data: { turn: 1 } }, flashMessage(), { type: 'turn/end', data: { turn: 1 } }]))
 expect(turnRow?.type, 'button')
-expect(turnRow.children[1].children[0], '~¥0.001500')
+expect(turnRow.children[1].children[0], '~$0.00027')
 console.log('chip:', turnRow.children[1].children[0], '·', turnRow.children[2].children[0])
 
 // 4. A Turn that billed two responses sums both.
@@ -190,7 +190,7 @@ const twoRow = pillOf(rowFor([
   flashMessage(),
   { type: 'turn/end', data: { turn: 2 } },
 ]))
-expect(twoRow.children[2].children[0], 'за запрос ¥0.003000')
+expect(twoRow.children[2].children[0], 'за запрос $0.00054')
 
 // 5. A Turn that also hit an unpriced model reports it instead of hiding it.
 const mixedRow = pillOf(rowFor([
@@ -233,7 +233,7 @@ const sessionView = sessionDefinition.buildViewNode({
 })
 /** Render the session chip with an optional whole-log projection. */
 function sessionChipFor(projection) {
-  const row = Row({ node: sessionView, t, useProjection: () => projection })
+  const row = Row({ node: sessionView, t, fxLocale: () => 'en-US', useProjection: () => projection })
   const chipRow = row.type(row.props)
   const pill = chipRow.children[0].type(chipRow.children[0].props)
   return { row: chipRow, button: pill.children[0] }
@@ -252,12 +252,31 @@ console.log('session (window):', windowLabel)
 const wholeLog = { uncachedInputTokens: 5000, cacheReadTokens: 500000, cacheWriteTokens: 0, outputTokens: 900 }
 const partial = sessionChipFor(wholeLog)
 expect(partial.row.props['data-request-cost-partial'], 'true')
-const expected = (5000 * 1 + 500000 * 0.02 + 900 * 2) / 1e6
+const expected = (5000 * 0.15 + 500000 * 0.003 + 900 * 0.6) / 1e6
 if (partial.button.props['data-request-cost'] === undefined) throw new Error('session chip lost its price attribute')
 const partialLabel = partial.button.children[1].children[0]
 console.log('session (whole log):', partialLabel)
 if (partialLabel === windowLabel) throw new Error('whole-log total equals the window total')
 console.log('whole-log cost:', expected.toFixed(6))
+
+// 9. The peak window doubles the price: 02:00 UTC on a Friday is peak.
+function rowAt(time) {
+  const turn = { turn: 1, status: 'closed', steps: [], data: { get: () => undefined } }
+  const events = [
+    { type: 'turn/start', seq: 1, data: { turn: 1 } },
+    { type: 'assistant/message', seq: 2, time, data: { turn: 1, step: 1, message: { id: 'm', role: 'assistant', content: [], source: { kind: 'model', provider: 'deepseek-official', model: 'deepseek-flash' } }, usage: { inputTokens: 1200, cacheReadTokens: 0, cacheWriteTokens: 0, outputTokens: 150 } } },
+    { type: 'turn/end', seq: 3, data: { turn: 1 } },
+  ]
+  const matches = events.map((event, index) => ({ event, role: index === 0 ? 'start' : 'update', location: { kind: 'turn', turn } }))
+  const start = matches[0]
+  const view = definition.buildViewNode({ key: 'k', id: 't', start, matches, state: definition.start({ key: 'k', id: 't', matches, start }, start) })
+  return Row({ node: view, t, fxLocale: () => 'en-US' })
+}
+const peakChip = pillOf(rowAt(Date.UTC(2026, 10, 20, 2, 0, 0)))
+const offPeakChip = pillOf(rowAt(Date.UTC(2026, 10, 21, 12, 0, 0)))
+expect(peakChip.children[1].children[0], '~$0.00054')
+expect(offPeakChip.children[1].children[0], '~$0.00027')
+console.log('peak:', peakChip.children[1].children[0], '| off-peak:', offPeakChip.children[1].children[0])
 
 console.log('effects:', effects.length, 'owned; dictionaries:', dictionaries.length)
 console.log('OK')

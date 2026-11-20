@@ -1,6 +1,6 @@
 # dsh-request-cost
 
-Плагин для [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): показывает в чате, сколько стоил каждый ответ модели — в юанях и в рублях по онлайн-курсу.
+Плагин для [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): показывает в чате, сколько стоил каждый ответ модели — в долларах по тарифам DeepSeek, плюс рубли и юани по онлайн-курсу.
 
 ![Чип стоимости под ответом](docs/preview.svg)
 
@@ -9,8 +9,8 @@
 Под каждым завершённым ответом появляются две строки:
 
 ```
-$ ~¥0.000472 ≈ 0,0058 ₽ · за запрос ¥0.000472 ≈ 0,0058 ₽
-$ по сессии ¥0.0123 ≈ 0,152 ₽
+$ ~$0.000472 ≈ 0,043 ₽ · за запрос $0.000472 ≈ 0,043 ₽
+$ по сессии $0.0123 ≈ 1,13 ₽
 ```
 
 - **за запрос** — цена этого ответа: ведущее число — последняя модель-ответ, рядом сумма по ходу (у хода может быть несколько обращений к модели);
@@ -21,12 +21,16 @@ $ по сессии ¥0.0123 ≈ 0,152 ₽
 
 ## Тарифы
 
-Встроены, юань за 1 млн токенов (со страницы цен DeepSeek):
+Взяты со страницы [DeepSeek API — Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing), доллары США за 1 млн токенов. У DeepSeek два тарифа: пиковый и непиковый (половина пикового).
 
-| Модель | Вход | Чтение кеша | Запись кеша | Вывод |
-|---|---|---|---|---|
-| `deepseek-flash` | 1 | 0.02 | 1 | 2 |
-| `deepseek-v4-pro` | 3 | 0.06 | 3 | 6 |
+| Модель | Вход, кеш-промах | Вход, кеш-попадание | Вывод |
+|---|---|---|---|
+| `deepseek-flash` — пик | $0.30 | $0.006 | $1.20 |
+| `deepseek-flash` — непик | $0.15 | $0.003 | $0.60 |
+| `deepseek-v4-pro` — пик | $1.32 | $0.044 | $3.96 |
+| `deepseek-v4-pro` — непик | $0.66 | $0.022 | $1.98 |
+
+Пик — 01:00–04:00 и 06:00–10:00 UTC по будням; остальное время непиковое. Праздники КНР в плагине не учитываются, такие дни считаются по пиковому тарифу. Запись в кеш DeepSeek отдельно не тарифицирует, поэтому считается по цене кеш-промаха.
 
 Модели вне списка показываются как «цена неизвестна», а не как бесплатные. Стоимость — оценка, а не счёт: точное списание считает платформа.
 
@@ -34,7 +38,7 @@ $ по сессии ¥0.0123 ≈ 0,152 ₽
 
 - читает только журнал сессии, который и так лежит на диске, и ничего в сессию не пишет;
 - host-часть плагина пустая: нет сервисов, инструментов, секций промпта и слушателей;
-- в браузере уходит один необязательный запрос — за справочным курсом на `open.er-api.com/v6/latest/CNY` (кеш 6 часов, `credentials: omit`). Ни цены, ни промпты, ни токены наружу не отправляются;
+- в браузере уходит один необязательный запрос — за справочными курсами USD→RUB и USD→CNY на `open.er-api.com/v6/latest/USD` (кеш 6 часов, `credentials: omit`). Ни цены, ни промпты, ни токены наружу не отправляются;
 - нет `eval`, `Function`, `innerHTML`, `dangerouslySetInnerHTML`; стили — на токенах темы.
 
 ## Установка
@@ -67,7 +71,7 @@ node test/smoke.mjs
 
 ## English
 
-A DeepSeek Harness plugin that shows what each answer cost, in yuan and in rubles at the current online rate: a chip under every completed answer (per request) and a running total for the session. It only reads the session log; the single optional network request is the reference rate from `open.er-api.com` (cached for six hours). Prices are built in for `deepseek-flash` and `deepseek-v4-pro`; any other model reads as price unknown, never free.
+A DeepSeek Harness plugin that shows what each answer cost: a chip under every completed answer (per request) and a second chip with the whole-session total. Prices come from the DeepSeek pricing page in USD, with the peak and off-peak tariffs, and are converted to rubles and yuan at the current online rate. The session total uses the log-wide token usage, so it does not change while older history pages load. It only reads the session log; the single optional network request is the reference rates from `open.er-api.com` (cached for six hours). Any model outside the price table reads as price unknown, never free.
 
 ## Лицензия
 

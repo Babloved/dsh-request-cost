@@ -41,8 +41,10 @@ window.__ModuleLoader__.load({
         'panel.output': 'Output',
         'panel.partialNote': '{count} response(s) are not in the price list and are counted as unknown, not as free.',
         'panel.windowNote': 'Part of the history is not loaded: the total uses the whole log\'s token usage and the {model} price.',
-        'panel.note': 'Source: {source}',
-        'panel.pricesBuiltin': 'built-in list, check it against the provider price page',
+        'panel.note': 'Prices: {source}',
+        'panel.pricesBuiltin': 'the DeepSeek pricing page, USD per 1M tokens, peak and off-peak',
+        'panel.peak': 'Peak tariff: 01:00-04:00 and 06:00-10:00 UTC on weekdays (Chinese holidays not accounted for).',
+        'panel.offPeak': 'Off-peak tariff: half of peak, applied outside the weekday peak windows.',
       },
       zh: {
         'entry.label': '请求费用',
@@ -65,8 +67,10 @@ window.__ModuleLoader__.load({
         'panel.output': '输出',
         'panel.partialNote': '有 {count} 个响应用于不在价目中，按未知处理，而不是免费。',
         'panel.windowNote': '历史未全部加载：总额按完整日志的 token 用量与 {model} 的价格计算。',
-        'panel.note': '来源：{source}',
-        'panel.pricesBuiltin': '内置价目，请对照服务商价格页核对',
+        'panel.note': '价格：{source}',
+        'panel.pricesBuiltin': 'DeepSeek 价格页，美元/百万 token，峰谷价',
+        'panel.peak': '峰时价：工作日 01:00-04:00 与 06:00-10:00 UTC（中国节假日未计入）。',
+        'panel.offPeak': '谷时价：峰时窗口之外，为峰时价的一半。',
       },
     }
 
@@ -91,8 +95,10 @@ window.__ModuleLoader__.load({
       'panel.output': 'Вывод',
       'panel.partialNote': '{count} ответ(ов) нет в прайсе: считаются неизвестными, а не бесплатными.',
       'panel.windowNote': 'Часть истории не загружена: итог посчитан по расходу токенов всей сессии и тарифу {model}.',
-      'panel.note': 'Источник: {source}.',
-      'panel.pricesBuiltin': 'встроенный прайс, сверьте со страницей цен провайдера',
+      'panel.note': 'Цены: {source}.',
+      'panel.pricesBuiltin': 'страница цен DeepSeek, доллары за 1 млн токенов, пик и непик',
+      'panel.peak': 'Пиковый тариф: 01:00–04:00 и 06:00–10:00 UTC по будням (праздники КНР не учтены).',
+      'panel.offPeak': 'Непиковый тариф: вдвое дешевле, вне пиковых окон по будням.',
     }
 
     DICTIONARIES.de = {
@@ -116,8 +122,10 @@ window.__ModuleLoader__.load({
       'panel.output': 'Ausgabe',
       'panel.partialNote': '{count} Antwort(en) fehlen in der Preisliste und gelten als unbekannt, nicht als kostenlos.',
       'panel.windowNote': 'Ein Teil des Verlaufs ist nicht geladen: die Summe nutzt den Token-Verbrauch des gesamten Protokolls und den Preis von {model}.',
-      'panel.note': 'Quelle: {source}.',
-      'panel.pricesBuiltin': 'eingebaute Preise, bitte mit der Preisseite des Anbieters abgleichen',
+      'panel.note': 'Preise: {source}.',
+      'panel.pricesBuiltin': 'die DeepSeek-Preisseite, USD je 1 Mio. Token, Peak und Off-Peak',
+      'panel.peak': 'Peak-Tarif: 01:00–04:00 und 06:00–10:00 UTC an Werktagen (chinesische Feiertage nicht berücksichtigt).',
+      'panel.offPeak': 'Off-Peak-Tarif: halber Peak-Preis außerhalb der Peak-Fenster.',
     }
 
     DICTIONARIES.es = {
@@ -141,8 +149,10 @@ window.__ModuleLoader__.load({
       'panel.output': 'Salida',
       'panel.partialNote': '{count} respuesta(s) no están en la lista de precios y cuentan como desconocidas, no como gratuitas.',
       'panel.windowNote': 'Parte del historial no está cargada: el total usa el consumo de tokens del registro completo y el precio de {model}.',
-      'panel.note': 'Fuente: {source}.',
-      'panel.pricesBuiltin': 'lista integrada, verifíquela en la página de precios del proveedor',
+      'panel.note': 'Precios: {source}.',
+      'panel.pricesBuiltin': 'la página de precios de DeepSeek, USD por 1 M de tokens, pico y valle',
+      'panel.peak': 'Tarifa pico: 01:00-04:00 y 06:00-10:00 UTC en días laborables (festivos chinos no incluidos).',
+      'panel.offPeak': 'Tarifa valle: la mitad del pico, fuera de las ventanas de pico.',
     }
 
     DICTIONARIES.fr = {
@@ -166,8 +176,10 @@ window.__ModuleLoader__.load({
       'panel.output': 'Sortie',
       'panel.partialNote': '{count} réponse(s) absentes de la grille tarifaire comptent comme inconnues, pas comme gratuites.',
       'panel.windowNote': 'Une partie de l’historique n’est pas chargée : le total utilise la consommation de tokens du journal complet et le tarif de {model}.',
-      'panel.note': 'Source : {source}.',
-      'panel.pricesBuiltin': 'grille intégrée, à vérifier sur la page des tarifs du fournisseur',
+      'panel.note': 'Tarifs : {source}.',
+      'panel.pricesBuiltin': 'la page des tarifs DeepSeek, USD par million de tokens, heures pleines et creuses',
+      'panel.peak': 'Tarif heures pleines : 01:00-04:00 et 06:00-10:00 UTC en semaine (jours fériés chinois non pris en compte).',
+      'panel.offPeak': 'Tarif heures creuses : moitié du plein, hors des fenêtres de pointe.',
     }
 
     DICTIONARIES.ja = {
@@ -191,8 +203,10 @@ window.__ModuleLoader__.load({
       'panel.output': '出力',
       'panel.partialNote': '{count} 件のレスポンスは価格表にないため、無料ではなく価格不明として扱います。',
       'panel.windowNote': '履歴の一部が未読み込みです。合計はログ全体のトークン使用量と {model} の料金で計算しています。',
-      'panel.note': '出典：{source}。',
-      'panel.pricesBuiltin': '組み込みの価格表（プロバイダーの価格ページで確認してください）',
+      'panel.note': '料金：{source}。',
+      'panel.pricesBuiltin': 'DeepSeek の料金ページ、100 万トークンあたりの米ドル、ピーク／オフピーク',
+      'panel.peak': 'ピーク料金：平日 01:00–04:00 と 06:00–10:00 UTC（中国の祝日は考慮していません）。',
+      'panel.offPeak': 'オフピーク料金：ピーク時間外は半額。',
     }
 
     DICTIONARIES.pt = {
@@ -216,30 +230,40 @@ window.__ModuleLoader__.load({
       'panel.output': 'Saída',
       'panel.partialNote': '{count} resposta(s) não estão na lista de preços e contam como desconhecidas, não como gratuitas.',
       'panel.windowNote': 'Parte do histórico não está carregada: o total usa o consumo de tokens do log completo e o preço de {model}.',
-      'panel.note': 'Fonte: {source}.',
-      'panel.pricesBuiltin': 'lista embutida, confira na página de preços do provedor',
+      'panel.note': 'Preços: {source}.',
+      'panel.pricesBuiltin': 'a página de preços da DeepSeek, USD por 1 milhão de tokens, pico e fora de pico',
+      'panel.peak': 'Tarifa de pico: 01:00-04:00 e 06:00-10:00 UTC em dias úteis (feriados chineses não considerados).',
+      'panel.offPeak': 'Tarifa fora de pico: metade do pico, fora das janelas de pico.',
     }
 
     const NS = 'requestCost2'
 
     /**
-     * Built-in price list, yuan per one million tokens, taken from the
-     * provider price page. The provider's cache-miss input price applies to
-     * both uncached input and cache write. A model missing here is shown as
-     * unpriced, never as free.
+     * Prices in US dollars per one million tokens, from
+     * https://api-docs.deepseek.com/quick_start/pricing (read 2026-11-20).
+     * DeepSeek bills cache writes at the cache-miss input price and has no
+     * separate write tariff. Off-peak is half of peak: peak applies 01:00-04:00
+     * and 06:00-10:00 UTC, Monday to Friday, excluding Chinese public holidays.
      */
     const PRICES = {
-      'deepseek-flash': { input: 1, cacheRead: 0.02, cacheWrite: 1, output: 2 },
-      'deepseek-v4-pro': { input: 3, cacheRead: 0.06, cacheWrite: 3, output: 6 },
+      'deepseek-flash': {
+        peak: { input: 0.3, cacheRead: 0.006, cacheWrite: 0.3, output: 1.2 },
+        offPeak: { input: 0.15, cacheRead: 0.003, cacheWrite: 0.15, output: 0.6 },
+      },
+      'deepseek-v4-pro': {
+        peak: { input: 1.32, cacheRead: 0.044, cacheWrite: 1.32, output: 3.96 },
+        offPeak: { input: 0.66, cacheRead: 0.022, cacheWrite: 0.66, output: 1.98 },
+      },
     }
 
     /**
-     * Online CNY→RUB reference rate: one request to a public converter, cached
-     * for six hours. When it fails the chip shows yuan only.
+     * Currency reference rates: one request to a public converter, cached for
+     * six hours. Prices come from the provider page in USD, so the chip shows
+     * USD and the panel adds rubles and yuan. A failed load leaves USD only.
      */
-    const FX_URL = 'https://open.er-api.com/v6/latest/CNY'
+    const FX_URL = 'https://open.er-api.com/v6/latest/USD'
     const FX_TTL_MS = 6 * 60 * 60 * 1000
-    const fx = { rate: undefined, updated: 0, fetching: false }
+    const fx = { rub: undefined, cny: undefined, updated: 0, fetching: false }
     const fxListeners = new Set()
 
     function fxSubscribe(listener) {
@@ -257,10 +281,10 @@ window.__ModuleLoader__.load({
       }
     }
 
-    /** Load the rate once per TTL; a failure leaves yuan-only rendering. */
+    /** Load the reference rates once per TTL; a failure keeps the USD reading. */
     function loadFx() {
       if (fx.fetching) return
-      if (fx.rate !== undefined && Date.now() - fx.updated < FX_TTL_MS) return
+      if (fx.rub !== undefined && Date.now() - fx.updated < FX_TTL_MS) return
       if (typeof fetch !== 'function') return
       fx.fetching = true
       const timeout = typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
@@ -269,74 +293,110 @@ window.__ModuleLoader__.load({
       fetch(FX_URL, { cache: 'no-store', credentials: 'omit', signal: timeout })
         .then(response => (response.ok ? response.json() : undefined))
         .then((body) => {
-          const rate = body && body.rates ? body.rates.RUB : undefined
-          // A plausible reference rate only; anything else keeps the old value.
-          if (typeof rate === 'number' && Number.isFinite(rate) && rate > 0.5 && rate < 1000) {
-            fx.rate = rate
-            fx.updated = Date.now()
-            fxPublish()
-          }
+          const rates = body && body.rates
+          const rub = rates ? rates.RUB : undefined
+          const cny = rates ? rates.CNY : undefined
+          // Plausible reference rates only; anything else keeps the old values.
+          const ok = value => typeof value === 'number' && Number.isFinite(value) && value > 0.0001 && value < 1000
+          if (!ok(rub) || !ok(cny)) return
+          fx.rub = rub
+          fx.cny = cny
+          fx.updated = Date.now()
+          fxPublish()
         })
         .catch(() => {})
         .finally(() => { fx.fetching = false })
     }
 
-    /** Subscribe a component to the rate arriving or refreshing. */
-    function useRubRate() {
-      const [rate, setRate] = React.useState(fx.rate)
+    /** Subscribe a component to the rates arriving or refreshing. */
+    function useFxRates() {
+      const [rates, setRates] = React.useState({ rub: fx.rub, cny: fx.cny })
       React.useEffect(() => {
-        if (fx.rate !== undefined && Date.now() - fx.updated < FX_TTL_MS) return undefined
+        if (fx.rub !== undefined && Date.now() - fx.updated < FX_TTL_MS) return undefined
         loadFx()
-        return fxSubscribe(() => setRate(fx.rate))
+        return fxSubscribe(() => setRates({ rub: fx.rub, cny: fx.cny }))
       }, [])
-      return rate
+      return rates
     }
 
-    /** Ruble reading of a yuan amount under the reference rate. */
-    function formatRub(yuan, rate, locale) {
-      if (rate === undefined || !Number.isFinite(yuan) || yuan <= 0) return ''
-      const rub = yuan * rate
-      const digits = rub >= 1 ? 2 : Math.min(6, Math.max(2, 3 - Math.floor(Math.log10(rub))))
+    /** Decimals that keep roughly three significant digits on a currency value. */
+    function currencyDigits(value) {
+      if (!Number.isFinite(value) || value <= 0) return 2
+      if (value >= 10) return 2
+      if (value >= 1) return 3
+      return Math.min(8, Math.max(2, 2 - Math.floor(Math.log10(value))))
+    }
+
+    /** One currency amount in the active language's convention. */
+    function formatMoney(value, currency, locale) {
+      if (!Number.isFinite(value)) return '—'
+      const amount = value > 0 ? value : 0
+      const digits = currencyDigits(amount)
       try {
         return new Intl.NumberFormat(locale, {
           style: 'currency',
-          currency: 'RUB',
+          currency,
           currencyDisplay: 'narrowSymbol',
           minimumFractionDigits: 2,
           maximumFractionDigits: digits,
-        }).format(rub)
+        }).format(amount)
       } catch {
-        return '₽' + rub.toFixed(digits)
+        return currency + ' ' + amount.toFixed(digits)
       }
     }
 
-    /** "1 ¥ = 12.36 ₽", the reference the chip used. */
-    function fxLine(rate, locale) {
+    /** "1 $ = 91.2 ₽", the reference the chip used. */
+    function fxLine(rates, locale) {
+      if (rates.rub === undefined) return ''
       try {
-        return '1 ¥ = ' + new Intl.NumberFormat(locale, {
+        return '1 $ = ' + new Intl.NumberFormat(locale, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 4,
-        }).format(rate) + ' ₽'
+        }).format(rates.rub) + ' ₽'
       } catch {
-        return '1 ¥ = ' + rate.toFixed(2) + ' ₽'
+        return '1 $ = ' + rates.rub.toFixed(2) + ' ₽'
       }
     }
 
     /* ── pricing ──────────────────────────────────────────────────────── */
 
     /**
-     * Resolve the price of one provider/model route: the exact model id, then
-     * `provider/model`. A route with no entry has an unknown price.
+     * Whether one moment falls in DeepSeek's peak window: 01:00-04:00 and
+     * 06:00-10:00 UTC, Monday to Friday. Chinese public holidays are not in the
+     * built-in calendar, so those days read as peak.
+     * @param time - response time in epoch milliseconds.
+     * @returns whether the peak tariff applied.
      */
-    function priceOf(route) {
+    function isPeak(time) {
+      if (!Number.isFinite(time)) return false
+      const moment = new Date(time)
+      const day = moment.getUTCDay()
+      if (day === 0 || day === 6) return false
+      const hour = moment.getUTCHours()
+      return (hour >= 1 && hour < 4) || (hour >= 6 && hour < 10)
+    }
+
+    /**
+     * Resolve the tariff of one provider/model route: the exact model id, then
+     * `provider/model`. A route with no entry has an unknown price.
+     * @param route - provider/model pair.
+     * @param time - response time in epoch milliseconds; absent reads off-peak.
+     * @returns the four per-million-token prices, or undefined.
+     */
+    function priceOf(route, time) {
       if (route === null || typeof route !== 'object') return undefined
       const model = route.model
       if (typeof model !== 'string' || model === '') return undefined
-      if (Object.prototype.hasOwnProperty.call(PRICES, model)) return PRICES[model]
-      const provider = route.provider
-      if (typeof provider !== 'string') return undefined
-      const qualified = provider + '/' + model
-      return Object.prototype.hasOwnProperty.call(PRICES, qualified) ? PRICES[qualified] : undefined
+      let entry = Object.prototype.hasOwnProperty.call(PRICES, model) ? PRICES[model] : undefined
+      if (entry === undefined) {
+        const provider = route.provider
+        const qualified = typeof provider === 'string' ? provider + '/' + model : undefined
+        entry = qualified !== undefined && Object.prototype.hasOwnProperty.call(PRICES, qualified)
+          ? PRICES[qualified]
+          : undefined
+      }
+      if (entry === undefined) return undefined
+      return isPeak(time) ? entry.peak : entry.offPeak
     }
 
     /* ── usage accounting ─────────────────────────────────────────────── */
@@ -382,7 +442,7 @@ window.__ModuleLoader__.load({
     /**
      * Price the latest reported response and the whole session from every
      * `assistant/message` in the log.
-     * @param messages - `assistant/message` event data objects, oldest first.
+     * @param messages - entries `{ usage, source, time }`, oldest first.
      * @returns `at` (the newest response reporting usage; `cost` is absent when
      * its price is unknown) and `total` (every priced response).
      */
@@ -396,19 +456,19 @@ window.__ModuleLoader__.load({
         const message = messages[index]
         const buckets = bucketsOf(message.usage)
         if (buckets === undefined) continue
-        const yuan = costOf(buckets, priceOf(routeOf(message)))
-        if (yuan === undefined) {
+        const amount = costOf(buckets, priceOf(message.source, message.time))
+        if (amount === undefined) {
           unpriced += 1
-          at = { tokens: buckets }
+          at = { tokens: buckets, time: message.time }
           continue
         }
-        cost += yuan
+        cost += amount
         priced += 1
         tokens.input += buckets.input
         tokens.cacheRead += buckets.cacheRead
         tokens.cacheWrite += buckets.cacheWrite
         tokens.output += buckets.output
-        at = { cost: yuan, tokens: buckets }
+        at = { cost: amount, tokens: buckets, time: message.time, peak: isPeak(message.time) }
       }
       return {
         at,
@@ -418,20 +478,6 @@ window.__ModuleLoader__.load({
 
     /* ── presentation ─────────────────────────────────────────────────── */
 
-    /**
-     * Yuan with at least two decimals and at least three significant digits.
-     * No rounding towards zero: a fraction of a fen shows its digits instead
-     * of a misleading `<¥0.0001`.
-     */
-    function formatYuan(value) {
-      if (!Number.isFinite(value)) return '—'
-      if (value <= 0) return '¥0.00'
-      if (value >= 10) return '¥' + value.toFixed(2)
-      if (value >= 1) return '¥' + value.toFixed(3)
-      const digits = Math.min(6, Math.max(4, 3 - Math.floor(Math.log10(value))))
-      return '¥' + value.toFixed(digits)
-    }
-
     /** Exact integer with thousands groups, like the host's token readings. */
     function formatCount(value) {
       if (!Number.isFinite(value) || value <= 0) return '0'
@@ -439,34 +485,41 @@ window.__ModuleLoader__.load({
     }
 
     /** The latest request's price, or the unknown-price word when it has no entry. */
-    function atText(summary, t) {
-      return summary.at.cost === undefined ? t('pill.unpriced') : formatYuan(summary.at.cost)
+    function atText(summary, t, rates, locale) {
+      return summary.at.cost === undefined
+        ? t('pill.unpriced')
+        : withRates(formatMoney(summary.at.cost, 'USD', locale), summary.at.cost, rates, locale)
     }
 
-    /** Pill sub-label: the session total and how much of it is unknown. */
     /**
-     * Chip sub-label for one scope: the Turn's own price or the whole loaded
-     * session, each with the ruble reading when the rate is known.
+     * Chip sub-label for one scope: the Turn's own price or the whole session,
+     * each with the ruble reading when the rates are known.
      * @param summary - priced reading.
      * @param t - locale seat.
-     * @param rate - rubles per yuan, or undefined.
+     * @param rates - reference rates from USD, or empty.
      * @param locale - active language id for number formatting.
      * @param scope - 'request' (this Turn) or 'session' (every Turn).
      * @returns the localized label.
      */
-    function labelFor(summary, t, rate, locale, scope) {
+    function labelFor(summary, t, rates, locale, scope) {
       const { priced, unpriced, cost } = summary.total
-      if (priced === 0) return atText(summary, t)
-      const total = withRubles(formatYuan(cost), cost, rate, locale)
+      if (priced === 0) return atText(summary, t, rates, locale)
+      const total = withRates(formatMoney(cost, 'USD', locale), cost, rates, locale)
       const plain = scope === 'session' ? 'pill.session' : 'pill.request'
       const partial = scope === 'session' ? 'pill.sessionPartial' : 'pill.requestPartial'
       return unpriced > 0 ? t(partial, { total, count: unpriced }) : t(plain, { total })
     }
 
-    /** "¥0.5 ≈ 6.18 ₽" once the rate is known; the yuan text alone otherwise. */
-    function withRubles(text, yuan, rate, locale) {
-      const rub = formatRub(yuan, rate, locale)
-      return rub === '' ? text : text + ' ≈ ' + rub
+    /** "$0.5 ≈ 46 ₽" once the rate is known; the dollar text alone otherwise. */
+    function withRates(text, usd, rates, locale) {
+      const rub = formatMoney(usd * (rates.rub === undefined ? NaN : rates.rub), 'RUB', locale)
+      return rates.rub === undefined ? text : text + ' ≈ ' + rub
+    }
+
+    /** Yuan reading of the same amount, for the panel only. */
+    function yuanOf(usd, rates, locale) {
+      if (rates.cny === undefined) return ''
+      return formatMoney(usd * rates.cny, 'CNY', locale)
     }
 
     const STYLE_ID = 'dsh-request-cost-style2'
@@ -538,27 +591,43 @@ window.__ModuleLoader__.load({
       return sample.tokens.input + sample.tokens.cacheRead + sample.tokens.cacheWrite + sample.tokens.output
     }
 
-    function CostPanel({ summary, t, rate, locale, scope }) {
+    /**
+     * Which tariff the displayed figure used: the newest response's window for a
+     * Turn, and the newest response's tariff for the whole-log estimate.
+     * @param summary - priced reading.
+     * @returns true for peak, false for off-peak, undefined when unknown.
+     */
+    function tariffOf(summary) {
+      if (summary.tariff !== undefined) return summary.tariff
+      return summary.at === undefined ? undefined : summary.at.peak
+    }
+
+    function CostPanel({ summary, t, rates, locale, scope }) {
       const tokens = summary.total.tokens
       const requests = formatCount(summary.total.priced)
         + (summary.total.unpriced > 0 ? ' (+' + summary.total.unpriced + ')' : '')
+      const money = (usd) => h('span', null,
+        withRates(formatMoney(usd, 'USD', locale), usd, rates, locale),
+        yuanOf(usd, rates, locale) === ''
+          ? null
+          : h('span', { className: 'dshrc2-sub' }, yuanOf(usd, rates, locale)))
       return h(
         'div',
         { className: 'dshrc2-panel', role: 'dialog', 'aria-label': t('panel.title') },
         h('div', { className: 'dshrc2-head' },
           h('span', null, t('panel.title')),
-          h('span', { className: 'dshrc2-total' }, withRubles(formatYuan(summary.total.cost), summary.total.cost, rate, locale))),
+          h('span', { className: 'dshrc2-total' }, money(summary.total.cost))),
         h('div', { className: 'dshrc2-rule', 'aria-hidden': true }),
         h('dl', { className: 'dshrc2-list' },
           h(Row, {
             label: t('panel.last'),
             value: summary.at.cost === undefined
               ? atText(summary, t)
-              : withRubles(formatYuan(summary.at.cost), summary.at.cost, rate, locale),
+              : money(summary.at.cost),
           }),
           h(Row, {
             label: t(scope === 'session' ? 'panel.session' : 'panel.total'),
-            value: withRubles(formatYuan(summary.total.cost), summary.total.cost, rate, locale),
+            value: money(summary.total.cost),
           }),
           h(Row, { label: t('panel.lastTokens'), value: formatCount(tokensOf(summary.at)) }),
           h(Row, { label: t('panel.requests'), value: requests }),
@@ -567,6 +636,9 @@ window.__ModuleLoader__.load({
           h(Row, { label: t('panel.cacheWrite'), value: formatCount(tokens.cacheWrite) }),
           h(Row, { label: t('panel.output'), value: formatCount(tokens.output) })),
         h('p', { className: 'dshrc2-note' }, t('panel.note', { source: t('panel.pricesBuiltin') })),
+        tariffOf(summary) === undefined
+          ? null
+          : h('p', { className: 'dshrc2-note' }, t(tariffOf(summary) ? 'panel.peak' : 'panel.offPeak')),
         summary.total.unpriced > 0
           ? h('p', { className: 'dshrc2-note' }, t('panel.partialNote', { count: summary.total.unpriced }))
           : null,
@@ -574,7 +646,7 @@ window.__ModuleLoader__.load({
           ? h('p', { className: 'dshrc2-note' }, t('panel.windowNote', { model: summary.route === undefined ? '' : summary.route.model }))
           : null,
         h('p', { className: 'dshrc2-note' }, t('panel.estimate')),
-        rate === undefined ? null : h('p', { className: 'dshrc2-note' }, fxLine(rate, locale)),
+        rates.rub === undefined ? null : h('p', { className: 'dshrc2-note' }, fxLine(rates, locale)),
       )
     }
 
@@ -583,7 +655,7 @@ window.__ModuleLoader__.load({
     /** The visible pill and its click-open breakdown; renders nothing without a priced response. */
 
     function CostPill({ summary, t, fxLocale, scope = 'request' }) {
-      const rate = useRubRate()
+      const rates = useFxRates()
       const locale = typeof fxLocale === 'function' ? fxLocale() : undefined
       const [expanded, setExpanded] = React.useState(false)
       const rootRef = React.useRef(null)
@@ -617,10 +689,8 @@ window.__ModuleLoader__.load({
       }, [available, expanded])
 
       if (!available) return null
-      const text = labelFor(summary, t, rate, locale, scope)
-      const at = summary.at.cost === undefined
-        ? atText(summary, t)
-        : withRubles(formatYuan(summary.at.cost), summary.at.cost, rate, locale)
+      const text = labelFor(summary, t, rates, locale, scope)
+      const at = atText(summary, t, rates, locale)
       // The session chip states one figure; the request chip leads with the
       // newest response and names the Turn's total beside it.
       const head = scope === 'session' ? null : t('pill.head', { at })
@@ -644,7 +714,7 @@ window.__ModuleLoader__.load({
           h('span', { className: 'dshrc2-sub' }, text),
         ),
         expanded && createPortal(
-          h('div', { ref: panelRef, style: { positionAnchor: anchor } }, h(CostPanel, { summary, t, rate, locale, scope })),
+          h('div', { ref: panelRef, style: { positionAnchor: anchor } }, h(CostPanel, { summary, t, rates, locale, scope })),
           document.body,
         ),
       )
@@ -683,14 +753,13 @@ window.__ModuleLoader__.load({
         if (context.start?.event.type !== 'turn/start') return null
         // The Context carries the Turn's committed events, so the row prices
         // exactly what this Turn billed.
-        const events = context.matches.map((match) => match.event)
-        const messages = []
-        for (const event of events) {
-          if (event.type === 'assistant/message' && event.data !== null && typeof event.data === 'object') {
-            messages.push(event.data)
-          }
+        const entries = []
+        for (const match of context.matches) {
+          const event = match.event
+          if (event.type !== 'assistant/message' || event.data === null || typeof event.data !== 'object') continue
+          entries.push({ usage: event.data.usage, source: routeOf(event.data), time: event.time })
         }
-        const summary = summarize(messages)
+        const summary = summarize(entries)
         if (summary.total.priced === 0) return null
         // Sort just after the Turn's own footer row: the host anchors that row
         // at `turn/end` + 0.1, so 0.2 keeps this chip directly below it instead
@@ -736,7 +805,7 @@ window.__ModuleLoader__.load({
         if (event.type === 'assistant/message') return { id: 'session', role: 'update' }
         return null
       },
-      start: () => ({ messages: [] }),
+      start: () => ({ entries: [] }),
       update: (context, match) => {
         const event = match.event
         // Only a settled response extends the running accounting; every other
@@ -744,11 +813,17 @@ window.__ModuleLoader__.load({
         if (event.type !== 'assistant/message' || event.data === null || typeof event.data !== 'object') {
           return context.state
         }
-        return { messages: [...context.state.messages, event.data] }
+        return {
+          entries: [...context.state.entries, {
+            usage: event.data.usage,
+            source: routeOf(event.data),
+            time: event.time,
+          }],
+        }
       },
       publication: (match) => (match.event.type === 'turn/end' ? 'immediate' : 'none'),
       buildViewNode: (context) => {
-        const summary = summarize(context.state.messages)
+        const summary = summarize(context.state.entries)
         if (summary.total.priced === 0) return null
         const last = context.matches[context.matches.length - 1]
         if (last === undefined) return null
@@ -766,20 +841,20 @@ window.__ModuleLoader__.load({
           location,
           visibility: 'visible',
           groupTree: 'turn',
-          data: { summary, routes: routesOf(context.state.messages), seq: last.event.seq },
+          data: { summary, routes: routesOf(context.state.entries), seq: last.event.seq },
         }
       },
     }
 
     /**
      * Distinct provider/model routes among the collected responses.
-     * @param messages - `assistant/message` payloads, oldest first.
+     * @param entries - priced entries `{ usage, source, time }`, oldest first.
      * @returns one entry per distinct route.
      */
-    function routesOf(messages) {
+    function routesOf(entries) {
       const seen = new Map()
-      for (const message of messages) {
-        const route = routeOf(message)
+      for (const entry of entries) {
+        const route = entry.source
         if (route === null || typeof route !== 'object' || typeof route.model !== 'string') continue
         const key = String(route.provider) + '\u0000' + route.model
         if (!seen.has(key)) seen.set(key, { provider: route.provider, model: route.model })
@@ -848,9 +923,9 @@ window.__ModuleLoader__.load({
       const windowSummary = data.summary
       const route = data.routes !== undefined && data.routes.length === 1 ? data.routes[0] : undefined
       if (usage === undefined || route === undefined) {
-        return { at: windowSummary.at, total: windowSummary.total, partial: false }
+        return { at: windowSummary.at, total: windowSummary.total, partial: false, tariff: windowSummary.at === undefined ? undefined : windowSummary.at.peak }
       }
-      const price = priceOf(route)
+      const price = priceOf(route, windowSummary.at === undefined ? undefined : windowSummary.at.time)
       if (price === undefined) {
         return { at: windowSummary.at, total: windowSummary.total, partial: false }
       }
@@ -880,6 +955,7 @@ window.__ModuleLoader__.load({
         },
         partial,
         route,
+        tariff: windowSummary.at === undefined ? undefined : windowSummary.at.peak,
       }
     }
 
